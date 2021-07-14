@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: rps-game
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password:
+    url: jdbc:postgresql://localhost:5432/rps_game_dev
+    username: Charlie
+  jpa:
+    generate-ddl: true
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: NONE
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      format_sql: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath:liquibase/master.xml
+    user: Charlie
+    password:
+    enabled: true
+    drop-first: false
+    url: jdbc:postgresql://localhost:5432/rps_game_dev
+
+logging:
+  level:
+    root: INFO
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
