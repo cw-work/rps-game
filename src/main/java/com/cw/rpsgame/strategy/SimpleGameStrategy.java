@@ -1,5 +1,6 @@
 package com.cw.rpsgame.strategy;
 
+import com.cw.rpsgame.dto.GameDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Random;
 public class SimpleGameStrategy implements GameStrategy{
 
     @Override
-    public Shape play(List<Shape> history) {
+    public Shape generateShape() {
         Random random = new Random();
         switch (random.nextInt(3) + 1) {
             case 1:

@@ -7,10 +7,12 @@ import com.cw.rpsgame.dto.UserDTO;
 import com.cw.rpsgame.service.TokenService;
 import com.cw.rpsgame.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("user")
 public class UserController {
 
     @Autowired
@@ -19,36 +21,35 @@ public class UserController {
     TokenService tokenService;
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
     public BaseResponse<UserDTO> login(@RequestBody BaseRequest<UserDTO> request) {
-        UserDTO userForBase = userService.findByUsername(request.getArgument());
+        UserDTO userDTO = userService.login(request.getArgument());
 
-        if (userForBase == null) {
-            return new BaseResponse<UserDTO>(401, "Invalid user.", null);
+        if (userDTO == null) {
+            return new BaseResponse<UserDTO>(400, "Invalid user or password.", null);
         } else {
-            if (!userForBase.getPassword().equals(request.getArgument().getPassword())) {
-                return new BaseResponse<UserDTO>(402, "Invalid password.", null);
-            } else {
-                String token = tokenService.getToken(userForBase);
-                UserDTO userDTO = request.getArgument();
-                userDTO.setToken(token);
-                return new BaseResponse<UserDTO>(200, "Success.", userDTO);
-            }
+            return new BaseResponse<UserDTO>(200, "Success.", userDTO);
         }
     }
 
-    @UserLoginToken
-    @GetMapping("/getUserHistory")
-    public BaseResponse<UserDTO> getUserHistory(@RequestBody BaseRequest<UserDTO> request) {
-        UserDTO userForBase = userService.findByUsername(request.getArgument());
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.OK)
+    public BaseResponse<UserDTO> register(@RequestBody BaseRequest<UserDTO> request) {
+        UserDTO userDTO = userService.register(request.getArgument());
 
-        if (userForBase == null) {
-            return new BaseResponse<UserDTO>(401, "Invalid user.", null);
+        return new BaseResponse<UserDTO>(200, "Success.", userDTO);
+    }
+
+    @UserLoginToken
+    @PostMapping(value = "/history")
+    @ResponseStatus(HttpStatus.OK)
+    public BaseResponse<UserDTO> getUserHistory(@RequestBody BaseRequest<UserDTO> request) {
+        UserDTO userDTO = userService.getUserHistory(request.getArgument());
+
+        if (userDTO == null) {
+            return new BaseResponse<UserDTO>(400, "Invalid user or password.", null);
         } else {
-            if (!userForBase.getPassword().equals(request.getArgument().getPassword())) {
-                return new BaseResponse<UserDTO>(402, "Invalid password.", null);
-            } else {
-                return new BaseResponse<UserDTO>(200, "Success.", userForBase);
-            }
+            return new BaseResponse<UserDTO>(200, "Success.", userDTO);
         }
     }
 }

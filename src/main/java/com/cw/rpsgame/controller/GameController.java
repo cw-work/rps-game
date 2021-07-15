@@ -10,16 +10,19 @@ import com.cw.rpsgame.service.GameService;
 import com.cw.rpsgame.service.TokenService;
 import com.cw.rpsgame.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("game")
 public class GameController {
 
     @Autowired
     GameService gameService;
 
-    @PostMapping("/play")
+    @PostMapping("/rps")
+    @UserLoginToken
+    @ResponseStatus(HttpStatus.OK)
     public BaseResponse<GameDTO> play(@RequestBody BaseRequest<GameDTO> request) {
         GameDTO result = gameService.play(request.getArgument());
 

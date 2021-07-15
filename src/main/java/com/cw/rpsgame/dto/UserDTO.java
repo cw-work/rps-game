@@ -21,6 +21,6 @@ public class UserDTO {
     @JsonProperty("token")
     private String token;
 
-    @JsonProperty("token")
-    private List<Shape> history;
+    @JsonProperty("history")
+    private List<GameDTO> history;
 }

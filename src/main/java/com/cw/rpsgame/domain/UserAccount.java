@@ -8,12 +8,12 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "user_account")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long Id;
+    Long id;
 
     @Column(name = "name")
     String name;
@@ -21,6 +21,6 @@ public class User {
     @Column(name = "password")
     String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY)
     private List<UserHistory> userHistoryList;
 }

@@ -9,14 +9,17 @@ import javax.websocket.SendHandler;
 @Data
 public class GameDTO {
 
-    @JsonProperty("player_id")
-    private Long playerId;
+    @JsonProperty("history_id")
+    private Long historyId;
 
-    @JsonProperty("player_name")
-    private String playerName;
+    @JsonProperty("user_id")
+    private Long userId;
 
-    @JsonProperty("player_shape")
-    private Shape playerShape;
+    @JsonProperty("user_shape")
+    private Shape userShape;
+
+    @JsonProperty("application_shape")
+    private String applicationShape;
 
     @JsonProperty("winner")
     private String winner;

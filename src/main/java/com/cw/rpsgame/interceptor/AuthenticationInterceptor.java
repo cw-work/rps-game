@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.cw.rpsgame.annotation.PassToken;
 import com.cw.rpsgame.annotation.UserLoginToken;
 import com.cw.rpsgame.dto.UserDTO;
+import com.cw.rpsgame.exception.BusinessException;
 import com.cw.rpsgame.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -41,23 +42,23 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
             if (userLoginToken.required()) {
                 if (token == null) {
-                    throw new RuntimeException("无token，请重新登录");
+                    throw new BusinessException(401, "Invalid token. Please log in again.");
                 }
                 String id;
                 try {
                     id = JWT.decode(token).getAudience().get(0);
                 } catch (JWTDecodeException j) {
-                    throw new RuntimeException("401");
+                    throw new BusinessException(500, "Server error.");
                 }
                 UserDTO userDTO = userService.findUserById(Long.parseLong(id));
                 if (userDTO == null) {
-                    throw new RuntimeException("User not existing.");
+                    throw new BusinessException(402, "User not existing.");
                 }
                 JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(userDTO.getPassword())).build();
                 try {
                     jwtVerifier.verify(token);
                 } catch (JWTVerificationException e) {
-                    throw new RuntimeException("401");
+                    throw new BusinessException(500, "Server error.");
                 }
                 return true;
             }
