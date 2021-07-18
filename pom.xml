@@ -15,6 +15,9 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<liquibase-source-url>jdbc:postgresql://localhost:5432/rps_game_dev</liquibase-source-url>
+		<liquibase-source-username>Charlie</liquibase-source-username>
+		<liquibase-source-password></liquibase-source-password>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -32,6 +35,16 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.4.15.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase.ext</groupId>
+			<artifactId>liquibase-hibernate5</artifactId>
+			<version>4.3.5</version>
 		</dependency>
 
 		<dependency>

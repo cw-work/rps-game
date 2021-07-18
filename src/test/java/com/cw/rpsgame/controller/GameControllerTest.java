@@ -4,34 +4,23 @@ import com.cw.rpsgame.domain.UserAccount;
 import com.cw.rpsgame.dto.BaseRequest;
 import com.cw.rpsgame.dto.UserDTO;
 import com.cw.rpsgame.repository.UserAccountRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import liquibase.pro.packaged.U;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.ResourceUtils;
-
-import java.io.File;
-import java.io.FileInputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class GameControllerTest {
 
     @Autowired
     UserAccountRepository userAccountRepository;
@@ -64,39 +53,13 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserRegisterSimple() throws Exception {
-        // positive test
-        UserAccount userAccount = userAccountRepository.findUserByName("Charlie");
-        userAccountRepository.delete(userAccount);
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName("Charlie");
-        userDTO.setPassword("na");
-        BaseRequest<UserDTO> baseRequest = new BaseRequest<>();
-        baseRequest.setArgument(userDTO);
-
-        mockMvc
-                .perform(post("/user/register").content(objectMapper.writeValueAsString(baseRequest))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-        userAccount = userAccountRepository.findUserByName("Charlie");
-        assertThat(userAccount).isNotNull();
-    }
-
-    @Test
-    public void testUserRegisterInvalidInput() throws Exception{
-        // negative test
-
-    }
-
-    @Test
-    public void testUserLoginSimple() throws Exception {
+    public void testPlaySimple() throws Exception {
         // positive test
     }
 
     @Test
-    public void testUserLoginInvalidInput() throws Exception {
+    public void testPlayInvalidInput() throws Exception{
         // negative test
+
     }
 }

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: finance
+    name: rps-game
   datasource:
     driver-class-name: org.postgresql.Driver
     password:

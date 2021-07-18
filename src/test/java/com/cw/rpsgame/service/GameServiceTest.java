@@ -13,24 +13,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 @Slf4j
-public class TokenServiceTest {
+public class GameServiceTest {
 
     @Autowired
-    TokenService tokenService;
+    GameService gameService;
 
     @Test
-    public void testGetTokenSimple() {
+    public void testPlayNormal() {
         // positive test
-        // test get token for a user
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(3l);
-        userDTO.setPassword("na");
-        assertThat(tokenService.getToken(userDTO)).isEqualTo("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzIn0.zqzPfW0eiVSbZt3a5GSdDYqFLYZXdnt2snHfA2oFHbY");
+        // test one-time game play and verify the result and verify the result and the game record
     }
 
     @Test
-    public void testGetTokenInvalidInput() {
+    public void testPlayMultiple() {
+        // positive test
+        // test multiple-time game play and verify the result and the game record
+    }
+
+    @Test
+    public void testPlayInvalidInput() {
         // negative test
-        // test get token for invalid input
+        // test invalid game play input and verify the result
     }
 }
